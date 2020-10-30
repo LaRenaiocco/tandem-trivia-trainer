@@ -1,7 +1,7 @@
 """Flask Server for TTT - Tandem Trivia Trainer"""
 from flask import (Flask, render_template, request, flash, session,
-                redirect)
-import crud
+                redirect, jsonify)
+import helper
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)
@@ -14,6 +14,11 @@ def homepage():
 
     return render_template('homepage.html')
 
+@app.route('/questions.json')
+    """Return 10 random question on quiz start"""
+
+    trivia = helper.generate_questions(select_ten())
+    return jsonify(trivia)
 
 
 if __name__ == '__main__':
