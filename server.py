@@ -15,9 +15,10 @@ def homepage():
     return render_template('homepage.html')
 
 @app.route('/questions.json')
+def get_trivia_data():
     """Return 10 random question on quiz start"""
 
-    trivia = helper.generate_questions(select_ten())
+    trivia = helper.generate_questions(helper.select_ten())
     return jsonify(trivia)
 
 
