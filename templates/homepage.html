@@ -9,18 +9,23 @@
 <div>Ready to test your trivia prowess?</div>
 <button id="start">START</button>
 <div id="questions" style="display: none">
-  <form action="/" >
-    <p id="question"></p>
+  <form action="/" id="questionForm">
+    <div id="question"></div>
       <br/>
       <input type="radio" name="answer" value="A" />
-        <div id="answerA"></div>
+        <span id="answerA"></span>
+        <br/>
       <input type="radio" name="answer" value="B" />
-        <div id="answerB"></div>
+        <span id="answerB"></span>
+        <br/>
       <input type="radio" name="answer" value="C" />
-        <div id="answerC"></div>
+        <span id="answerC"></span>
+        <br/>
       <input type="radio" name="answer" value="D" />
-        <div id="answerD"></div>
-      <button id="submit">This is my final answer.</button>
+        <span id="answerD"></span>
+        <br/>
+        <br/>
+      <input type="submit" id="submit" />
   </form>
 </div>
 <div id="answers"></div>
