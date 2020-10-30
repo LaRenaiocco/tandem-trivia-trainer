@@ -1,5 +1,9 @@
 "use strict"
 
+$('#start').on('click', () => {
+    $('#questions').show()
+})
+
 $.get('/questions.json', (data) => {
     data.forEach(d => {
         displayQuestion(d)
@@ -51,3 +55,4 @@ function displayAnswers(dictionary) {
         $('#questions').append(answer)
     })
 }
+

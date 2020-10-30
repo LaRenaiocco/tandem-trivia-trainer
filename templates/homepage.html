@@ -6,7 +6,23 @@
 
 {% block body %}
 <div>Welcome to Trivia</div>
-<div id="questions"></div>
+<div>Ready to test your trivia prowess?</div>
+<button id="start">START</button>
+<div id="questions" style="display: none">
+  <form action="/" >
+    <p id="question"></p>
+      <br/>
+      <input type="radio" name="answer" value="A" />
+        <div id="answerA"></div>
+      <input type="radio" name="answer" value="B" />
+        <div id="answerB"></div>
+      <input type="radio" name="answer" value="C" />
+        <div id="answerC"></div>
+      <input type="radio" name="answer" value="D" />
+        <div id="answerD"></div>
+      <button id="submit">This is my final answer.</button>
+  </form>
+</div>
 <div id="answers"></div>
 
 {% endblock %}
