@@ -8,11 +8,20 @@ let current = 0;
 $('#start').on('click', () => {
     $.get('/questions.json', (data) => {
         jsonQs = data;
-        $('#welcome').hide()
-        $('#start').hide()
-        generateQuestion(current);
+        startQuiz()
     });
 });
+
+// shifts DOM and starts quiz
+function startQuiz() {
+    const banner = document.createElement('img')
+    banner.src = '/static/images/banner.png'
+    $('#logodiv').append(banner)
+    $('#logo').hide()
+    $('#welcome').hide()
+    $('#start').hide()
+    generateQuestion(current);
+}
 
 // Generates question to appear and recursively calls each question until 10
 function generateQuestion(num) {
@@ -105,8 +114,11 @@ function checkAnswerText(dictionary, answer) {
 function gameOver(SCORE) {
     const message = document.createElement('div')
     const score = document.createElement('div')
+    const thanks = document.createElement('div')
     message.innerText = 'Game Over'
     score.innerText = `You got ${SCORE}/10 correct!`
+    thanks.innerText = 'Thanks for playing!'
     $('#gameover').append(message)
     $('#gameover').append(score)
+    $('#gameover').append(thanks)
 }

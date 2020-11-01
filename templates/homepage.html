@@ -5,11 +5,17 @@
 {% endblock %}
 
 {% block body %}
-<h1>Welcome to Trivia</h1>
+<div id="logodiv">
+  <img id="logo" src="/static/images/logo.png" alt="Tandem Bike square logo"/>
+</div>
 <div id="welcome">Ready to test your trivia prowess?</div>
 <button id="start">START</button>
 <div id="questions"></div>
 <div id="gameover"></div>
+<div hidden id="author">
+  This quiz was prepared by LaRena Rose Iocco using a tiny 
+  Python and Flask backend and Javascript and jQuery on the frontend.
+</div>
 
 {% endblock %}
 

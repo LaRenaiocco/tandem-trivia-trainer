@@ -1,4 +1,5 @@
 """Flask Server for TTT - Tandem Trivia Trainer"""
+
 from flask import (Flask, render_template, request, flash, session,
                 redirect, jsonify)
 import helper
@@ -23,5 +24,4 @@ def get_trivia_data():
 
 
 if __name__ == '__main__':
-    # connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
