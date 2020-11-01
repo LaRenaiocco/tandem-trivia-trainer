@@ -5,30 +5,11 @@
 {% endblock %}
 
 {% block body %}
-<div>Welcome to Trivia</div>
-<div>Ready to test your trivia prowess?</div>
+<h1>Welcome to Trivia</h1>
+<div id="welcome">Ready to test your trivia prowess?</div>
 <button id="start">START</button>
-<div id="questions" style="display: none">
-  <form action="/" id="questionForm">
-    <div id="question"></div>
-      <br/>
-      <input type="radio" name="answer" value="A" />
-        <span id="answerA"></span>
-        <br/>
-      <input type="radio" name="answer" value="B" />
-        <span id="answerB"></span>
-        <br/>
-      <input type="radio" name="answer" value="C" />
-        <span id="answerC"></span>
-        <br/>
-      <input type="radio" name="answer" value="D" />
-        <span id="answerD"></span>
-        <br/>
-        <br/>
-      <input type="submit" id="submit" />
-  </form>
-</div>
-<div id="answers"></div>
+<div id="questions"></div>
+<div id="gameover"></div>
 
 {% endblock %}
 

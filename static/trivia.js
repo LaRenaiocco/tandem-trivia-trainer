@@ -1,43 +1,73 @@
 "use strict"
 
-$('#start').on('click', () => {
-    $('#questions').show()
-})
+let SCORE = 0;
+let jsonQs;
+let current = 0;
 
-$.get('/questions.json', (data) => {
-    data.forEach(d => {
-        displayQuestion(d)
-        displayAnswers(d)
-        $('#questionForm').on('submit', (event) => {
-            event.preventDefault();
-            const checked = $('input[name=answer]:checked').val()
-            console.log(`This value: ${checked}`)
-        })  
-    })
+
+$('#start').on('click', () => {
+    $.get('/questions.json', (data) => {
+        jsonQs = data;
+        $('#welcome').hide()
+        $('#start').hide()
+        generateQuestion(current);
+    });
 });
 
-
-//  render question 
-function displayQuestion(dictionary) {
-    $('#question').text(dictionary['question'])
-    // const question = document.createElement('div');
-    // question.setAttribute('class', 'question');
-    // question.textContent = dictionary['question'];
-    // $('#questions').append(question)
+// Generates question to appear and recursively calls each question until 10
+function generateQuestion(num) {
+    const dict = jsonQs[num];
+    const answers = randomChoice(compileAnswers(dict));
+    createForm(dict, answers);
+    $('#questionForm').on('submit', (event) => {
+        event.preventDefault();
+        const userAnswer = $('input[name=answer]:checked').val();
+        checkAnswerText(dict, checkAnswer(userAnswer));
+        current += 1;
+        if ( current < jsonQs.length) {
+            $('#questionForm').remove();
+            generateQuestion(current)
+        } else {
+            $('#questionForm').remove();
+            gameOver(SCORE)
+        };
+    });
 };
-// compile answer options from incorrect and correct
+
+// creates form for current question
+function createForm(dictionary, answers) {
+    $("#questions").append(
+    $("<form/>", { id: 'questionForm', action: '/', method: 'POST'}).append(
+    $("<div>", {class: "question", text: dictionary['question']}),
+    $("<br/>"),
+    $("<input/>", {type: 'radio', id: 'inputA', name: 'answer', value: 'A', required: 'true'}),
+    $("<span>", {id: 'answerA', text: `${answers[0]}`}), 
+    $("<br/>"),
+    $("<input/>", {type: 'radio', id: 'inputB', name: 'answer', value: 'B'}), 
+    $("<span>", {id: 'answerB', text: `${answers[1]}`}), 
+    $("<br/>"),
+    $("<input/>", {type: 'radio', id: 'inputC', name: 'answer', value: 'C'}), 
+    $("<span>", {id: 'answerC', text: `${answers[2]}`}), 
+    $("<br/>"),
+    $("<input/>", {type: 'radio', id: 'inputD', name: 'answer', value: 'D'}), 
+    $("<span>", {id: 'answerD', text: `${answers[3]}`}), 
+    $("<br/>"),
+    $("<input/>", {type: 'submit', id: 'submit', value: 'Submit'})
+    ));
+};
+
+// compile answer options from incorrect and correct in question dictionary
 function compileAnswers(dictionary)  {
     const answerArray = [];
-    const incorrect = dictionary['incorrect']
-    const correct = dictionary['correct']
+    const incorrect = dictionary['incorrect'];
+    const correct = dictionary['correct'];
     incorrect.forEach(i => {
         answerArray.push(i)
     });
     answerArray.push(correct);
-    console.log(` og array: ${answerArray}`);
-
     return answerArray;
-}
+};
+
 //  randomize the answer array
 function randomChoice(answerArray) {
     const randomAnswers = [];
@@ -45,39 +75,38 @@ function randomChoice(answerArray) {
         const choice = Math.floor(Math.random() * answerArray.length)
         const answer = answerArray.splice(choice, 1)
         randomAnswers.push(answer)
-    }
-    console.log(`random array: ${randomAnswers}`)
-    return randomAnswers
-}
+    };
+    return randomAnswers;
+};
 
-// render answers for question
-function displayAnswers(dictionary) {
-    const answers = randomChoice(compileAnswers(dictionary))
-    // console.log(answers)
-    // answers.forEach(a => {
-    //     const answer = document.createElement('div')
-    //     answer.setAttribute('class', 'answer')
-    //     answer.textContent = a;
-    //     $('#questions').append(answer)   
-    // })
-    $('#answerA').text(answers[0])
-    $('#answerB').text(answers[1])
-    $('#answerC').text(answers[2])
-    $('#answerD').text(answers[3])
+// Get span text information for user answer
+function checkAnswer(userAnswer) {
+    if (userAnswer === 'A') {
+        return $('#answerA').text()
+    } else if (userAnswer === 'B') {
+        return $('#answerB').text()
+    } else if (userAnswer === 'C') {
+        return $('#answerC').text()
+    } else if (userAnswer === 'D') {
+        return $('#answerD').text()
+    };
+};
 
-}
+// check if user answer is correct
+function checkAnswerText(dictionary, answer) {
+    if (answer === dictionary['correct']) {
+        alert('You are correct');
+        SCORE += 1;
+    } else {
+        alert(`You are incorrect. The correct answer is: ${dictionary['correct']}`)
+    };
+};
 
-function checkAnswer(form, name) {
-    console.log(form)
-    console.log(name)
-    const radios = form.elements[name];
-    console.log(radios)
-    radios.forEach(r => {
-        if ( r.checked ) {
-            const userAnswer = r.value
-            console.log(`radio for loop answer: ${userAnswer}`)
-            return r.value
-        }
-        
-    })
+function gameOver(SCORE) {
+    const message = document.createElement('div')
+    const score = document.createElement('div')
+    message.innerText = 'Game Over'
+    score.innerText = `You got ${SCORE}/10 correct!`
+    $('#gameover').append(message)
+    $('#gameover').append(score)
 }
