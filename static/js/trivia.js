@@ -60,11 +60,11 @@ function createForm(dictionary, answers) {
     $("<br/>"),
     $("<input/>", {type: 'radio', id: 'inputD', name: 'answer', value: 'D'}), 
     $("<span>", {id: 'answerD', text: `${answers[3]}`}), 
-    $("<br/>"),
-    $("<input/>", {type: 'submit', id: 'submit', value: 'Submit'})
+    $("<br/>"), $("<br/>"),
+    $("<input/>", {type: 'submit', class: ' btn btn-lg button', id: 'submit', value: 'Submit'}),
     ));
 };
-
+// class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm"
 // compile answer options from incorrect and correct in question dictionary
 function compileAnswers(dictionary)  {
     const answerArray = [];
@@ -112,8 +112,9 @@ function checkAnswerText(dictionary, answer) {
 };
 
 function gameOver(SCORE) {
-    const message = document.createElement('div')
-    const score = document.createElement('div')
+    $('#closing').show()
+    const message = document.createElement('h1')
+    const score = document.createElement('h2')
     const thanks = document.createElement('div')
     message.innerText = 'Game Over'
     score.innerText = `You got ${SCORE}/10 correct!`
