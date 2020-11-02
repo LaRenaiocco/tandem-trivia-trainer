@@ -53,11 +53,10 @@ pip install -r requirements.txt
 
 Run the app:
 ```
-
-python3.6 server.py
+python3 server.py
 ```
 
-You can now navigate to 'localhost:5000/' to access your Tandem Trivia Trainer.
+You can now navigate to 'localhost:5000/' in your web browser to access your Tandem Trivia Trainer.
 
 ## <a name="license"></a>License
 The MIT License (MIT) Copyright (c) 2016 Agne Klimaite
